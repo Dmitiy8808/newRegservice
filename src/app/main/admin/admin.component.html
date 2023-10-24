@@ -1,0 +1,46 @@
+<div class="admin-wrapper">
+  <div class="admin-top-menu">Добавить редактировать список отзыва</div>
+  <div class="admin-dashboard">
+    <div class="admin-dashboard-tools">Список пользователей</div>
+    <div class="admin-dashboard-search">
+      <input placeholder="ИНН логнин" type="text" class="search-input">
+    </div>
+    <div class="mat-table-container">
+      <table class="mat-table">
+          <thead>
+              <tr class="mat-header-row">
+                  <th class="mat-header-cell">Логин</th>
+                  <th class="mat-header-cell">ФИО</th>
+                  <th class="mat-header-cell">Наименование</th>
+                  <th class="mat-header-cell">ИНН</th>
+                  <th class="mat-header-cell">КПП</th>
+                  <th class="mat-header-cell">Центр идентификации</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr class="mat-row">
+                  <td class="mat-cell">John</td>
+                  <td class="mat-cell">25</td>
+                  <td class="mat-cell">123 Main St</td>
+                  <td class="mat-cell">John</td>
+                  <td class="mat-cell">25</td>
+                  <td class="mat-cell">123 Main St</td>
+              </tr>
+              <tr class="mat-row">
+                  <td class="mat-cell">Jane</td>
+                  <td class="mat-cell">30</td>
+                  <td class="mat-cell">456 Elm St</td>
+                  <td class="mat-cell">John</td>
+                  <td class="mat-cell">25</td>
+                  <td class="mat-cell">123 Main St</td>
+              </tr>
+          </tbody>
+      </table>
+      <div class="pagination">
+        <button (click)="goToPage(1)">First</button>
+        <button *ngFor="let page of pageNumbers" (click)="goToPage(page)" [class.active]="currentPage === page">{{ page }}</button>
+        <button (click)="goToPage(totalPages)">Last</button>
+      </div>
+  </div>
+  </div>
+</div>

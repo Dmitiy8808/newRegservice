@@ -1,0 +1,58 @@
+<div class="head" [ngClass]="getHeadClass()">
+  <div class="head-content">
+
+    <!-- <div class="head-content-left">
+      <div class="search-container">
+        <div class="normal-search">
+          <input type="search" class="search" name="" id=""
+          placeholder="Поиск">
+          <i class="search-icon material-icons" *ngIf="collapsed">search</i>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="head-content-right">
+      <div class="user-container">
+        <div class="user-email-container">
+          stud@1c.ru
+        </div>
+        <div class="user-role-container">
+          Администратор
+        </div>
+      </div>
+
+      <div class="user-avatar-container" >
+        <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
+          <div class="user-avatar" >
+            S
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #userOverlay>
+  <div class="overlay overlay-user overlay-fall" cdkMenu>
+    <ul>
+      <li *ngFor="let item of userItems" cdkMenuItem>
+        <a>
+          <i class="icon material-icons">{{item.icon}}</i>
+          <span>{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+
+
+
+<div class="example-menu" cdkMenu>
+  <button class="example-menu-item" cdkMenuItem>Inbox</button>
+  <button class="example-menu-item" cdkMenuItem>Snoozed</button>
+  <button class="example-menu-item" cdkMenuItem>Important</button>
+  <button class="example-menu-item" cdkMenuItem>Sent</button>
+  <button class="example-menu-item" cdkMenuItem>Drafts</button>
+  <button class="example-menu-item" cdkMenuItem>All Mail</button>
+</div>

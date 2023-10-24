@@ -1,0 +1,47 @@
+.dialog-overlay {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.dialog-overlay.visible {
+  display: block;
+}
+
+.dialog-container {
+  position: fixed;
+  max-width: 450px;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: .5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.625rem; /* 10px/16px = 0.625rem */
+  right: 0.625rem; /* 10px/16px = 0.625rem */
+  background: none;
+  border: none;
+  font-size: 1.25rem; /* 20px/16px = 1.25rem */
+  font-weight: 100;
+  cursor: pointer;
+  padding: 0.3125rem 0.625rem; /* 5px/16px = 0.3125rem; 10px/16px = 0.625rem */
+  line-height: 1;
+  z-index: 2;
+  color: #ccc;  /* Optional: Adjust the icon color */
+}
+
+.close-btn:hover {
+  color: rgb(29, 28, 28);  /* Optional: Adjust the icon color on hover */
+}

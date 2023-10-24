@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="wrapper">
+
+    <h1>Вход 1С:Подпись</h1>
+
+        <div class="tabbed-section__selector">
+          <div class="tabbed-section__selector-tab-1"
+              [class.active]="activeTab === 1"
+              (click)="setActiveTab(1)">По сертификату</div>
+
+          <div class="tabbed-section__selector-tab-2"
+              [class.active]="activeTab === 2"
+              (click)="setActiveTab(2)">По паролю</div>
+        </div>
+
+    <div class="tabbed-section-1" [class.visible]="activeTab === 1" [class.hidden]="activeTab !== 1">
+      <div class="cert-menu-wrapper" *ngIf="connectionStatus$ | async; else notConnected">
+        <ng-container *ngIf="certificates!.length > 0; else noCertificates">
+          <!-- TODO Сделать поиск по CN сертификата -->
+          <div class="cert-memu-item" *ngFor="let certificate of certificates" (click)="onCertClick(certificate.SubjectKeyId)">
+            <div class="cn-header">
+              <div class="commonname">{{ certificate.CommonName }}</div>
+              <div class="not-after">{{ certificate.NotAfter }}</div>
+            </div>
+            <div *ngIf="certificate.Ogrn" class="ul-user-name">{{ certificate.Surname }} {{ certificate.GivenName }}</div>
+            <div *ngIf="certificate.Ogrn" class="inn">{{ certificate.InnUl }}</div>
+            <div *ngIf="!certificate.Ogrn" class="inn">{{ certificate.Inn }}</div>
+          </div>
+        </ng-container>
+        <ng-template #noCertificates>
+          <div class="error-wrapper">
+            <div class="error-message">Не найдено доступных сертифкатов</div>
+            <div class="error-detail-message">
+              <div>Проверьте установлен ли сертифкат пользователя в личное хранилище. Проверьте <a href="https://its.1c.ru/db/partnerits#content:1073:hdoc" target="_blank" rel="noopener noreferrer">настройки</a> рабочего места.
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <ng-template #notConnected>
+        <div class="error-wrapper">
+          <div class="error-message">Для входа по сертификату необходимо запустить или установить 1C.Тулбокс</div>
+          <div class="error-detail-message">
+            <div>Скачайте приложение
+              <a href="assets/toolbox/1Сtoolbox.Setup.2.5.0.exe"  rel="noopener noreferrer">1C.Тулбокс</a>.
+              При необходимости воспользуйтесь <a href="https://its.1c.ru/db/partnerits#content:1073:hdoc" target="_blank" rel="noopener noreferrer">инструкцией</a> по настройке работчено места.
+              При входе по логину и паролю предназначен только для первичного выпуска сертификата.
+              Отключите приложение Тулбокс Калуги Астрал на время работы с сервисом.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="tabbed-section-2" [class.visible]="activeTab === 2" [class.hidden]="activeTab !== 2">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogOnByPassword()">
+        <div class="input-control" [class.error]="loginForm.controls.login.invalid && (loginForm.controls.login.touched || loginForm.controls.login.dirty)">
+            <input type="text" id="login" placeholder="Логин" formControlName="login" required>
+            <label for="login">Логин</label>
+            <span >Заполните логин</span>
+        </div>
+        <div class="input-control" [class.error]="loginForm.controls.password.invalid && (loginForm.controls.password.touched || loginForm.controls.password.dirty)">
+            <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" placeholder="Пароль" formControlName="password" required>
+            <label for="password">Пароль</label>
+            <span>Заполните пароль</span>
+
+            <button type="button" (click)="togglePasswordVisibility()">
+              <i *ngIf="isPasswordVisible" class="material-symbols-rounded" >visibility_off</i>
+              <i *ngIf="!isPasswordVisible" class="material-symbols-rounded" >visibility</i>
+            </button>
+        </div>
+        <button [disabled]="!loginForm.valid" [class.disabled-btn]="!loginForm.valid" type="submit"  class="material-btn">Вход</button>
+      </form>
+    </div>
+    <app-dialog [visible]="showDialog" (closeEvent)="resetDialogState()">
+      <div class="error-wrapper">
+        <div class="error-message">{{ errorMessage }}</div>
+        <div class="error-detail-message" *ngIf="unregisteredUserIsVisible">
+          <div>Сертификат не добавлен в учетную запись.</div>
+          <div>Чтобы исправить ошибку, вышлите открытую часть сертификата в формате *.cer на почту сервиса ca@1c.ru.
+            Для регистрации в сервисе ознакомьтесь с
+            <a href="https://its.1c.ru/db/partnerits#content:1083:hdoc" target="_blank" rel="noopener noreferrer">порядком регистрации</a>.</div>
+        </div>
+        <div class="error-detail-message" *ngIf="blockedUserIsVisible">
+          <div>Учетная запись пользователя отключена администратором.</div>
+          <div>Воспользуйтесь другой учетной записью или напишите обращение на почту сервиса ca@1c.ru.</div>
+        </div>
+        <div class="error-detail-message" *ngIf="certBlockedIsVisible">
+          <div>Возможно причиной блокировки является отзыв одного из сертификатов цепочки. Проверить сертифкат на отзыв можно используя
+            сервис <a href="https://www.gosuslugi.ru/pgu/eds" target="_blank" rel="noopener noreferrer">Госуслуг</a>.
+            Если сертифкат действителен, то напишите обращение на почту сервиса ca@1c.ru.</div>
+        </div>
+        <div class="error-detail-message" *ngIf="wrongLoginOrPasswordIsVisible">
+          <div>Проверьте корректность ввода логина и пароля.
+            Для регистрации в сервисе ознакомьтесь с
+            <a href="https://its.1c.ru/db/partnerits#content:1083:hdoc" target="_blank" rel="noopener noreferrer">порядком регистрации</a>.
+            Если вы уверены, что у вас есть учетная запись в сервисе, напишите обращение на почту ca@1c.ru.
+          </div>
+        </div>
+        <div class="error-detail-message" *ngIf="!isActualPluginVersion">
+          <div>Для корректной работы сервиса обновите плагин до <a href="assets/toolbox/1Сtoolbox.Setup.2.5.0.exe"  rel="noopener noreferrer">последней версии</a>.</div>
+        </div>
+        <div class="error-detail-message" *ngIf="isSignError">
+          <div>Действие отменено пользователем или отсутсвует лицензия на СКЗИ КриптоПро CSP</div>
+        </div>
+        <div class="error-detail-message" *ngIf="isCryptoError">
+          <div>Проверьте корректность настройки криптопровайдера КриптоПро CSP или VipNet CSP на рабочем месте.</div>
+        </div>
+        <div class="error-detail-message" *ngIf="isCryptoInitError">
+          <div>Не найден криптопровайдер для использования сертификата. Проверьте правильность установки КриптоПро CSP или VipNet CSP</div>
+        </div>
+      </div>
+    </app-dialog>
+</div>
+
+
+
+
+

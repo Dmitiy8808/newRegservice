@@ -1,0 +1,466 @@
+// 255,222,65 - Основной цвет
+// 255,241,102 - Дополнительный цвет
+//253,209,13 - Цвет при наведении
+
+
+@primary-color: rgb(255, 222, 65);
+@darken-primary-color: rgb(253, 209, 13);
+@hover-color: #f0f0f0;
+@border-color: #e0e0e0;
+@input-focus-color: rgb(255, 241, 102);
+@input-error-color: #b00020;
+@placeholder-text-color: rgba(32, 33, 36, .5);
+@background-color: #fff;
+
+// .container {
+//   display: grid;
+//   place-items: center;
+//   height: 100vh;
+// }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  padding-top: 15vh;
+  /* 5% of the viewport's height */
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: transparent;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 450px;
+  width: 100%;
+  background: @background-color;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: .5rem;
+  padding: 1.5rem;
+}
+
+.tabbed-section__selector {
+  display: flex;
+  border-bottom: 1px solid @primary-color;
+  overflow: hidden;
+}
+
+.tabbed-section__selector>div {
+  flex: 1;
+  text-align: center;
+  padding: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
+
+// .tabbed-section__selector > div:hover {
+//   background-color: @hover-color;
+// }
+
+.tabbed-section__selector>div.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: @primary-color;
+}
+
+.tabbed-section-1,
+.tabbed-section-2,
+.tabbed-section-3 {
+  transition: opacity 0.3s;
+}
+
+.tabbed-section-1.hidden,
+.tabbed-section-2.hidden,
+.tabbed-section-3.hidden {
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  width: 100%;
+  background: @background-color;
+}
+
+div h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.input-control {
+  display: block;
+  border-radius: .25rem;
+  position: relative;
+  width: 100%;
+  height: 3.5rem;
+  transition: .15s;
+  margin-bottom: .75rem;
+}
+
+.input-control input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: 1.5px solid #ccc;
+  border-radius: .25rem;
+  padding: .75rem .75rem .875rem;
+  font-size: 1rem;
+  font-family: "RobotoDraft", "Roboto", 'Helvetica Neue', sans-serif;
+  letter-spacing: .02em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.input-control label {
+  position: absolute;
+  top: 1.1rem;
+  left: .65rem;
+  padding-left: .125rem;
+  padding-right: .125rem;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: .01em;
+  transition: .15s;
+  background: @background-color;
+  color: @placeholder-text-color;
+  z-index: 2;
+}
+
+
+
+.input-control span {
+  position: absolute;
+  bottom: -1rem;
+  left: .75rem;
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .03em;
+  transition: .15s;
+  display: inline-block;
+  opacity: 0;
+  visibility: false;
+  color: @input-error-color;
+}
+
+.input-control input:focus {
+  border: 1.5px solid @primary-color;
+}
+
+.input-control input:focus+label {
+  top: -.4rem;
+  left: .65rem;
+  color: @placeholder-text-color;
+  font-size: .75rem;
+}
+
+.input-control input:not(:placeholder-shown)+label {
+  top: -.4rem;
+  left: .65rem;
+  font-size: .75rem;
+}
+
+.input-control .material-symbols-rounded {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  color: #202124;
+  opacity: .5;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: .65rem;
+  transform: translateY(-50%);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.input-control.error input {
+  border: 1.5px solid @input-error-color;
+}
+
+.input-control.error input+label {
+  color: @input-error-color;
+}
+
+.input-control.error span {
+  visibility: visible;
+  opacity: 1;
+}
+
+// .visiable-button {
+//   opacity: 1;
+//   color: red;
+//   background-color: red;
+//   z-index: 10;
+// }
+
+.textarea-control {
+  display: block;
+  border-radius: .25rem;
+  position: relative;
+  width: 100%;
+  height: 8rem;
+  margin-bottom: .75rem;
+}
+
+.textarea-control textarea {
+  width: 100%;
+  height: 100%;
+  padding: .75rem .75rem .875rem;
+  border: 1.5px solid #ccc;
+  border-radius: .25rem;
+  outline: none;
+  resize: none;
+  font-size: 1rem;
+  font-family: "RobotoDraft", "Roboto", 'Helvetica Neue', sans-serif;
+  letter-spacing: .02em;
+  transition: .15s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.textarea-control label {
+  position: absolute;
+  top: .825rem;
+  left: .65rem;
+  padding-left: .125rem;
+  padding-right: .125rem;
+  font-size: 1rem;
+  letter-spacing: .01em;
+  font-weight: 400;
+  background: @background-color;
+  transition: .15s;
+  color: @placeholder-text-color;
+  z-index: 2;
+}
+
+.textarea-control span {
+  position: absolute;
+  right: .65rem;
+  bottom: .65rem;
+  z-index: 10;
+  font-size: .7rem;
+  color: #202124;
+  opacity: .5;
+}
+
+.textarea-control textarea:focus {
+  border: 1.5px solid @input-focus-color;
+}
+
+.textarea-control textarea:focus+label {
+  top: -.4rem;
+  left: .65rem;
+  color: @input-focus-color;
+  font-size: .75rem;
+}
+
+.textarea-control textarea:not(:placeholder-shown)+label {
+  top: -.4rem;
+  left: .65rem;
+  font-size: .75rem;
+}
+
+// Button
+
+.material-btn {
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  font-size: 1rem;
+  min-width: 64px;
+  height: 36px;
+  padding: 6px 16px;
+  line-height: 1.75;
+  border-radius: 4px;
+  background-color: @primary-color;
+  /* Primary color */
+  color: #000;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+.material-btn:hover {
+  background-color: @darken-primary-color;
+  /* Darken primary color */
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.material-btn:active {
+  background-color: @darken-primary-color;
+  ;
+  /* Even darker primary color */
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+// .disabled-btn {
+//   background-color: #d3d3d3; /* Light gray color for disabled state */
+//   cursor: not-allowed;
+// }
+
+.disabled-btn,
+.disabled-btn:hover,
+.disabled-btn:active,
+.disabled-btn:focus {
+    /* Override the hover, active and focus effect for disabled button */
+    background-color: rgba(255, 222, 65, 0.2); /* Keep it the same as the disabled color so it doesn't seem to change */
+    cursor: default;
+    box-shadow: none; /* Prevents any focus shadow that might appear */
+}
+
+.cert-menu-wrapper {
+  max-height: 50vh; /* adjust this value to your preference */
+  overflow-y: auto;
+}
+
+/* This styles the scrollbar track (the background) */
+.cert-menu-wrapper::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+  background-color: #F5F5F5; /* color of the track */
+}
+
+/* This styles the scrollbar handle (the moving part) */
+.cert-menu-wrapper::-webkit-scrollbar-thumb {
+  background-color: @primary-color; /* color of the handle */
+  border-radius: 4px; /* makes the handle's corners rounded */
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+
+/* This styles the handle on hover */
+.cert-menu-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: @darken-primary-color;
+}
+
+/* This styles the scrollbar track in Firefox */
+.cert-menu-wrapper {
+  scrollbar-color: @primary-color #F5F5F5; /* thumb and track color */
+  scrollbar-width: thin; /* can be set to "thin", "auto", or "none" */
+}
+
+
+.cert-memu-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: .25rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cert-memu-item:hover {
+  background-color: #f5f5f5;
+}
+
+.cn-header {
+  display: flex;       /* Use Flexbox */
+  justify-content: space-between;  /* Space elements apart as much as possible */
+}
+
+.not-after {
+  text-align: right;   /* Align text to the right */
+  flex: 1;            /* Take up remaining space, pushing the common name to the left */
+}
+
+.commonname {
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  font-size: 1rem;
+}
+
+.error-message {
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.error-detail-message {
+  font-weight: 300;
+  letter-spacing: 0.02857em;
+  font-size: 0.9rem;
+  margin-top: 0.1rem;
+  color: @placeholder-text-color;
+}
+
+.error-wrapper {
+  max-width: 400px;
+  width: 100%;
+}
+
+.inn {
+  font-weight: 300;
+  letter-spacing: 0.02857em;
+  font-size: 0.9rem;
+  margin-top: 0.1rem;
+  color: @placeholder-text-color;
+}
+
+.ul-user-name {
+  color: @placeholder-text-color;
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  line-height: 1;
+  z-index: 2;
+  color: #555;  /* Optional: Adjust the icon color */
+}
+
+.close-btn:hover {
+  color: #000;  /* Optional: Adjust the icon color on hover */
+
+}
