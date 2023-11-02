@@ -1,0 +1,47 @@
+<div class="pagination-wrapper">
+<div class="custom-select" (click)="toggleDropdown()">
+  <div class="selected-wrapper">
+    <span class="selected">{{itemsPerPage}}</span>
+    <i class="material-icons select-icon" [class.rotated]="showOptions">arrow_drop_up</i>
+  </div>
+  <div class="custom-options" *ngIf="showOptions">
+    <span *ngFor="let option of options" class="option"
+      (click)="selectOption(option)"
+      [ngClass]="{'selected-option': option === itemsPerPage}" >{{option}}</span>
+  </div>
+</div>
+
+  <div class="count-block">
+    Страница {{ currentPage }} из {{ pages.length }}
+  </div>
+  <div class="pagination">
+    <i
+      class="material-icons pagination-icon"
+      [ngClass]="{ disabled: currentPage === 1 }"
+      (click)="changePage(1)"
+    >
+      first_page
+    </i>
+    <i
+      class="material-icons pagination-icon"
+      [ngClass]="{ disabled: currentPage === 1 }"
+      (click)="changePage(currentPage - 1)"
+    >
+      navigate_before
+    </i>
+    <i
+      class="material-icons pagination-icon"
+      [ngClass]="{ disabled: currentPage === lastPage }"
+      (click)="changePage(currentPage + 1)"
+    >
+      navigate_next
+    </i>
+    <i
+      class="material-icons pagination-icon"
+      [ngClass]="{ disabled: currentPage === lastPage }"
+      (click)="changePage(lastPage)"
+    >
+      last_page
+    </i>
+  </div>
+</div>

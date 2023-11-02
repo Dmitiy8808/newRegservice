@@ -1,0 +1,87 @@
+
+.normal-input {
+    flex: 0 1 600px;
+    // width: 100%;
+    position: relative;
+    border: 1px solid rgb(153, 153, 153);
+    border-radius: 8px;
+  }
+
+  .normal-input:hover {
+    border: 1px solid rgb(77, 77, 84);
+
+    .close-icon {
+      color: rgb(77, 77, 84);
+    }
+  }
+
+  .normal-input:focus-within {
+    border: 1px solid rgb(0, 78, 161);
+
+    .close-icon {
+      color: rgb(0, 78, 161);
+    }
+  }
+
+
+  .search {
+    flex: 1;
+    /* Let the input grow to fill the container */
+    padding-left: 2.5rem;
+    padding-right: 40px;
+    /* Added space for close icon */
+    border: none;
+    /* Remove border as it's now on the container */
+    box-shadow: none;
+    outline: none;
+    /* Remove outline for a cleaner look */
+    font-size: 16px;
+    color: rgb(77, 77, 84);
+    height: 2.375rem;
+    background: transparent;
+    width: 100%;
+  }
+
+  .normal {
+    /* Let the input grow to fill the container */
+    padding-left: 0.5rem;
+    padding-right: 40px;
+    /* Added space for close icon */
+    border: none;
+    /* Remove border as it's now on the container */
+    box-shadow: none;
+    outline: none;
+    /* Remove outline for a cleaner look */
+    font-size: 16px;
+    color: rgb(77, 77, 84);
+    height: 2.375rem;
+    background: transparent;
+    width: 100%;
+  }
+
+  .search-icon {
+    position: absolute;
+    font-size: 1.7rem;
+    line-height: 2.375rem;
+    left: 0.813rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(77, 77, 84);
+  }
+
+  .close-icon {
+    position: absolute;
+    font-size: 1.3rem;
+    line-height: 2.375rem;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgb(153, 153, 153);
+  }
+
+  .error-message {
+    color: #f44336; /* Material Design Error Color */
+    font-size: 12px;
+    margin-top: 4px;
+  }

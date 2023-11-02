@@ -1,45 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AgentData } from 'src/app/shared/models/agentData';
+import { Observable } from 'rxjs/internal/Observable';
+import { AgentsResponse } from 'src/app/shared/models/agent';
+import { AgentDataParams } from 'src/app/shared/models/agentDataParams';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-
+  agentDataParams = new AgentDataParams();
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  getAgentsData() {
+  getAgentsData(): Observable<AgentsResponse> {
 
     const httpOptions = {
       withCredentials: true
     };
 
-    const payload : AgentData= {
-      _search: false,
-      nd: 1698130769353, // Note: this value might need to change or be dynamic
-      rows: 20,
-      page: 1,
-      sidx: 'AgentName',
-      sord: 'asc',
-      Page: 1,
-      Rows: 20,
-      Sidx: 'AgentName',
-      Sord: 'asc',
-      Login: null,
-      PersonId: -1,
-      PersonFio: null,
-      Snils: null,
-      AgentId: -1,
-      AgentName: null,
-      Inn: null,
-      Kpp: null
-    };
+    return this.http.post<AgentsResponse>(this.baseUrl + '/webregoffice/Admin/GetAgentsData', this.agentDataParams, httpOptions);
+  }
 
-    return this.http.post(this.baseUrl + '/webregoffice/Admin/GetAgentsData', payload, httpOptions);
+  setAgentDataParams(params: AgentDataParams) {
+    this.agentDataParams = params;
+  }
+
+  getAgentDataParams() {
+    return this.agentDataParams;
   }
 }
 

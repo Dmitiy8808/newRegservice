@@ -12,6 +12,13 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu/sublevel-menu.com
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from '../components/pagination/pagination.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputComponent } from '../components/input/input.component';
+import { InnMaskDirective } from '../directives/inn-mask.directive';
+import { RequestDetailComponent } from './request-detail/request-detail.component';
+
+
 
 
 @NgModule({
@@ -23,14 +30,20 @@ import { HttpClientModule } from '@angular/common/http';
     SidenavComponent,
     MainLayoutComponent,
     BodyComponent,
-    SublevelMenuComponent
+    SublevelMenuComponent,
+    PaginationComponent,
+    InputComponent,
+    InnMaskDirective,
+    RequestDetailComponent
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     OverlayModule,
     CdkMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class MainModule { }

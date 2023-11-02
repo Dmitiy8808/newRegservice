@@ -1,0 +1,20 @@
+<div class="normal-input">
+  <input
+    [(ngModel)]="inputText"
+    [placeholder]="placeholder"
+    [appInnMask]="maskType"
+    type="text"
+    [class]="inputType"
+
+    />
+  <i class="material-icons search-icon" *ngIf="inputType === 'search'">search</i>
+  <i class="material-icons close-icon" *ngIf="inputText" (click)="clearSearch()">close</i>
+  <!-- <div *ngIf="inputControl.invalid && (inputControl.dirty || inputControl.touched)" class="error-message">
+ 
+    <span *ngIf="inputControl.errors!['pattern']">Input does not match the required pattern.</span>
+    <span *ngIf="inputControl.errors!['required']">This field is required.</span>
+  </div> -->
+</div>
+
+
+

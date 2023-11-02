@@ -1,46 +1,295 @@
-<div class="admin-wrapper">
-  <div class="admin-top-menu">Добавить редактировать список отзыва</div>
-  <div class="admin-dashboard">
-    <div class="admin-dashboard-tools">Список пользователей</div>
-    <div class="admin-dashboard-search">
-      <input placeholder="ИНН логнин" type="text" class="search-input">
+<div class="admin-page">
+  <div class="admin-wrapper">
+    <div class="admin-top-menu">
+      <nav class="nav-tab">
+        <div class="tab-title-wrapper active-tab" title="Список пользователей">
+          <span tabindex="0" class="tab-title">Список пользователей</span>
+          <div class="active-element"></div>
+        </div>
+        <div class="tab-title-wrapper" title="Стоп лист">
+          <span tabindex="-1" class="tab-title">Стоп лист</span>
+          <div class="_267dom"></div>
+        </div>
+      </nav>
     </div>
-    <div class="mat-table-container">
-      <table class="mat-table">
-          <thead>
-              <tr class="mat-header-row">
-                  <th class="mat-header-cell">Логин</th>
-                  <th class="mat-header-cell">ФИО</th>
-                  <th class="mat-header-cell">Наименование</th>
-                  <th class="mat-header-cell">ИНН</th>
-                  <th class="mat-header-cell">КПП</th>
-                  <th class="mat-header-cell">Центр идентификации</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="mat-row">
-                  <td class="mat-cell">John</td>
-                  <td class="mat-cell">25</td>
-                  <td class="mat-cell">123 Main St</td>
-                  <td class="mat-cell">John</td>
-                  <td class="mat-cell">25</td>
-                  <td class="mat-cell">123 Main St</td>
-              </tr>
-              <tr class="mat-row">
-                  <td class="mat-cell">Jane</td>
-                  <td class="mat-cell">30</td>
-                  <td class="mat-cell">456 Elm St</td>
-                  <td class="mat-cell">John</td>
-                  <td class="mat-cell">25</td>
-                  <td class="mat-cell">123 Main St</td>
-              </tr>
-          </tbody>
-      </table>
-      <div class="pagination">
-        <button (click)="goToPage(1)">First</button>
-        <button *ngFor="let page of pageNumbers" (click)="goToPage(page)" [class.active]="currentPage === page">{{ page }}</button>
-        <button (click)="goToPage(totalPages)">Last</button>
+    <div class="admin-dashboard">
+      <div class="add-sort-menu">
+        <div class="admin-dashboard-title">Список пользователей</div>
+        <div (click)="openOverlay()" class="add-button">
+          <i class="material-icons">add</i>
+          <span>Добавить</span>
+        </div>
+        <div class="sort-button" [cdkMenuTriggerFor]="filterOverlay">
+          <div class="sort-button-wrapper">
+            <i class="material-icons">sort</i>
+            <span>Отбор</span>
+          </div>
+        </div>
       </div>
-  </div>
+      <div class="pdding-container">
+        <div class="search-container">
+          <div class="search-container-wrapper">
+            <div class="normal-search">
+              <form [formGroup]="searchForm">
+                <input placeholder="ИНН, Логин, Наименование" type="text" class="search" formControlName="searchInput"/>
+                <i class="material-icons search-icon">search</i>
+                <i class="material-icons close-icon" *ngIf="inputSearchValue" (click)="clearInputSearchValue()">close</i>
+              </form>
+            </div>
+            <!-- <app-input
+              class="search-input"
+              inputType="search"
+              placeholder="ИНН, Логин"
+
+            ></app-input> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- filter -->
+
+      <div class="filter-container">
+        <!-- <div class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title">
+                ФИО: Ступин
+            </span>
+          </span>
+          <div class="filter-close-icon-container">
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div> -->
+
+        <!-- "Login": new FormControl(null),
+        "PersonFio": new FormControl(null),
+        "AgentName": new FormControl(null),
+        "Inn": new FormControl(null),
+        "Kpp": new FormControl(null),
+        "IsIdentCenter": new FormControl(null) -->
+
+        <div *ngIf="agentDataParams.Login && !isLoginInSearchValue" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title">
+              Логин: {{ agentDataParams.Login }}
+            </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('Login')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+        <div *ngIf="agentDataParams.PersonFio" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title">
+              ФИО: {{ agentDataParams.PersonFio }}
+            </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('PersonFio')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+        <div *ngIf="agentDataParams.AgentName && !isAgentNameInSearchValue" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title">
+              Наименование: {{ agentDataParams.AgentName }}
+            </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('AgentName')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+        <div *ngIf="agentDataParams.Inn && !isInnInSearchValue" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title"> ИНН: {{ agentDataParams.Inn }} </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('Inn')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+        <div *ngIf="agentDataParams.Kpp" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title"> КПП: {{ agentDataParams.Kpp }} </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('Kpp')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+        <div *ngIf="agentDataParams.IsIdentCenter" class="filter-tab">
+          <span class="filter-title-wrapper">
+            <span class="filter-title">
+              Статус ЦИ: {{ agentDataParams.IsIdentCenter }}
+            </span>
+          </span>
+          <div
+            class="filter-close-icon-container"
+            (click)="clearProperty('IsIdentCenter')"
+          >
+            <i class="material-icons tab-close-icon">close</i>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="scroll-table">
+          <table>
+            <thead>
+              <tr class="table-header-row">
+                <th class="table-header-cell email">Логин</th>
+                <th class="table-header-cell fio">ФИО</th>
+                <th class="table-header-cell company-name">Наименование</th>
+                <th class="table-header-cell">ИНН</th>
+                <th class="table-header-cell">КПП</th>
+                <th class="table-header-cell id-center">ЦИ</th>
+              </tr>
+            </thead>
+          </table>
+          <div class="scroll-table-body" (scroll)="onScroll($event)">
+            <table>
+              <tbody>
+                <tr *ngFor="let agent of agents" class="table-row">
+                  <td class="table-cell email">{{ agent.cell[0] }}</td>
+                  <td class="table-cell fio">{{ agent.cell[2] }}</td>
+                  <td class="table-cell company-name">{{ agent.cell[5] }}</td>
+                  <td class="table-cell">{{ agent.cell[6] }}</td>
+                  <td class="table-cell">{{ agent.cell[7] }}</td>
+                  <td class="table-cell id-center">{{ agent.cell[8] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="admin-footer">
+      <app-pagination
+        *ngIf="totalrecords !== 0"
+        [totalItems]="totalrecords"
+        [itemsPerPage]="agentDataParams.rows"
+        [currentPage]="1"
+        (pageChanged)="onPageChanged($event)"
+        (itemsPerPageChanged)="onItemsPerPageChanged($event)"
+        #paginationComponent
+      >
+      </app-pagination>
+    </div>
   </div>
 </div>
+
+
+<ng-template #filterOverlay>
+  <div class="overlay-filter" cdkMenu>
+    <div class="filter-block">
+      <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+        <div class="filter-parameters-wrapper">
+          <div class="filter-parameter">
+            <label for="login" class="parameter-title">Логин</label>
+            <div class="normal-input">
+              <input class="search-input normal" formControlName="Login" />
+              <i
+                class="material-icons close-icon"
+                *ngIf="filterForm.get('Login')?.value"
+                (click)="clearSearch('Login')"
+                >close</i
+              >
+            </div>
+            <!-- <div *ngIf="login!.invalid && (login!.dirty || login!.touched)" class="error-message">
+                <span *ngIf="login!.errors?.['required']">Обязательное поле</span>
+              </div> -->
+          </div>
+          <div class="filter-parameter right-element">
+            <label for="fio" class="parameter-title">ФИО</label>
+            <div class="normal-input">
+              <input class="search-input normal" formControlName="PersonFio" />
+              <i
+                class="material-icons close-icon"
+                *ngIf="filterForm.get('PersonFio')?.value"
+                (click)="clearSearch('PersonFio')"
+                >close</i
+              >
+            </div>
+          </div>
+        </div>
+        <div class="filter-parameters-wrapper">
+          <div class="filter-parameter">
+            <label for="login" class="parameter-title">Наименование</label>
+            <div class="normal-input">
+              <input class="search-input normal" formControlName="AgentName" />
+              <i
+                class="material-icons close-icon"
+                *ngIf="filterForm.get('AgentName')?.value"
+                (click)="clearSearch('AgentName')"
+                >close</i
+              >
+            </div>
+          </div>
+          <div class="filter-parameter right-element">
+            <label for="fio" class="parameter-title">ИНН</label>
+            <div class="normal-input">
+              <input class="search-input normal" formControlName="Inn" />
+              <i
+                class="material-icons close-icon"
+                *ngIf="filterForm.get('Inn')?.value"
+                (click)="clearSearch('Inn')"
+                >close</i
+              >
+            </div>
+          </div>
+        </div>
+        <div class="filter-parameters-wrapper">
+          <div class="filter-parameter">
+            <label for="login" class="parameter-title">КПП</label>
+            <div class="normal-input">
+              <input class="search-input normal" formControlName="Kpp" />
+              <i class="material-icons close-icon" *ngIf="filterForm.get('Kpp')?.value" (click)="clearSearch('Kpp')">close</i>
+            </div>
+          </div>
+          <div class="filter-parameter right-element">
+            <div class="custom-select" #dropdownRef>
+              <label for="fio" class="parameter-title">Статус ЦИ</label>
+              <div class="dropown-input" (click)="toggleDropdown()">
+                <input class="dropdown-search-input normal" formControlName="IsIdentCenter"/>
+                <i class="material-icons dropdown-icon" [class.rotated]="showOptions">expand_more</i>
+                <i class="material-icons dropdown-close-icon" *ngIf="filterForm.get('IsIdentCenter')?.value" (click)="clearSearch('IsIdentCenter')">close</i>
+              </div>
+              <div class="dropdown-custom-options" *ngIf="showOptions">
+                <div class="dropdown-options-wrapper">
+                  <span
+                    *ngFor="let option of options"
+                    class="dropdown-option"
+                    (click)="selectOption(option)"
+                  >
+                    {{ option }}
+                    <i
+                      class="material-icons done-icon"
+                      *ngIf="option === filterForm.get('IsIdentCenter')?.value"
+                      >done</i
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-button-container">
+          <button class="filter-button" [disabled]="isDisabled">
+            Применить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
