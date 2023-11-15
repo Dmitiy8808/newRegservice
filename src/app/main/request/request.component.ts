@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService } from './request.service';
+import { RequestService } from 'src/app/services/request.service';
+
 
 @Component({
   selector: 'app-request',

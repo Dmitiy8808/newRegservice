@@ -5,13 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DropdownInputComponent } from './components/dropdown-input/dropdown-input.component';
+import { IConfig, provideNgxMask } from 'ngx-mask';
 
 
-
-
-
-
-
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -22,9 +21,12 @@ import { DropdownInputComponent } from './components/dropdown-input/dropdown-inp
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
-  providers: [],
+  providers: [
+    provideNgxMask(maskConfig)
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

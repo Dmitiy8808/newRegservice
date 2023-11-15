@@ -4,11 +4,398 @@
       <div class="request-detail-footer-title">
         Создание нового пользователя
       </div>
+      <div class="save-button">
+        <div class="save-button-container" >
+          <div data-connotation="3" class="save-button-container-wrapper" >
+            <span class="save-button-icon-wrapper">
+              <span class="image save-button-icon"><!--?xml version="1.0" encoding="UTF-8"?-->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-content-save-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="width: auto; height: auto; object-fit: scale-down;"><path d="M15,5V9H5V19H9.35C8.5,18.27 8,17.19 8,16C8,13.79 9.79,12 12,12C14.21,12 16,13.79 16,16C16,17.19 15.5,18.27 14.65,19H19V7.83L16.17,5H15M5,7H13V5H5V7M17,3L21,7V19C21,20.1 20.1,21 19,21H5C3.89,21 3,20.1 3,19V5C3,3.9 3.9,3 5,3H17M12,14C10.9,14 10,14.9 10,16C10,17.1 10.9,18 12,18C13.1,18 14,17.1 14,16C14,14.9 13.1,14 12,14Z"></path></svg>
+              </span>
+            </span>
+            <span>Сохранить</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="request-detail-body">
+        <div class="user-data">
+          <div class="user-data-wrapper">
+            <div class="user-data-label">
+              Данные пользователя
+            </div>
+          <form [formGroup]="partnerForm" (ngSubmit)="savePartner()">
+            <div class="form-line">
+
+              <!-- <div class="checkbox-container">
+                <label class="checkbox-label-normal">
+                  <svg class="checkbox-svg" viewBox="0 0 24 24">
+                    <path class="checkbox-svg-line-normal" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                  </svg>
+                  <input type="checkbox" class="checkbox-input" formControlName="IsDisabled">
+                </label>
+              </div> -->
+              <div class="checkbox-container">
+                <label [ngClass]="{
+                          'checkbox-label-normal': !partnerForm.controls['IsDisabled'].value,
+                          'checkbox-label-checked': partnerForm.controls['IsDisabled'].value
+                       }" class="checkbox-label">
+                  <svg class="checkbox-svg" viewBox="0 0 24 24">
+                    <path [ngClass]="{
+                            'checkbox-svg-line-normal': !partnerForm.controls['IsDisabled'].value,
+                            'checkbox-svg-line-checked': partnerForm.controls['IsDisabled'].value
+                         }" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                  </svg>
+                  <input type="checkbox" class="checkbox-input" formControlName="IsDisabled">
+                </label>
+                <div class="checkbox-title">
+                  Отключен
+                </div>
+              </div>
+
+            </div>
+            <!-- SWITCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! <div class="form-line">
+              <label class="material-switch">
+                <input type="checkbox" id="material-toggle" class="material-switch-input" formControlName="IsDisabled"/>
+                <span class="material-switch-track"></span>
+                <span class="material-switch-thumb"></span>
+              </label>
+              <div *ngIf="partnerForm.get('IsDisabled')!.value; else enableUser" class="switch-activ-title">
+                Отключить пользователя
+              </div>
+              <ng-template #enableUser>
+                <div class="switch-activ-title">
+                  Включить пользователя
+                </div>
+              </ng-template>
+            </div> -->
+            <div class="form-line none-first-line">
+              <div>
+                <label for="inn" class="parameter-title">ИНН</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Inn" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Inn')?.value"
+                    (click)="clearSearch('Inn')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="inn!.invalid && (inn!.dirty || inn!.touched)" class="error-message">
+                    <span *ngIf="inn!.errors?.['required']">Обязательное поле</span>
+                    <span *ngIf="inn!.errors?.['invalidInn']">Некорректный ИНН</span>
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="kpp" class="parameter-title">КПП</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Kpp" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Kpp')?.value"
+                    (click)="clearSearch('Kpp')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="kpp!.invalid && (kpp!.dirty || kpp!.touched)" class="error-message">
+                    <span *ngIf="kpp!.errors?.['required']">Обязательное поле</span>
+                    <span *ngIf="kpp!.errors?.['invalidKpp']">Некорректный КПП</span>
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="name" class="parameter-title">Наименование</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Name" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Name')?.value"
+                    (click)="clearSearch('Name')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="error-message">
+                    <span *ngIf="name!.errors?.['required']">Обязательное поле</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-line none-first-line">
+              <div>
+                <label for="snils" class="parameter-title">СНИЛС</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Snils" required mask="000-000-000 00"/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Snils')?.value"
+                    (click)="clearSearch('Snils')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="snils!.invalid && (snils!.dirty || snils!.touched)" class="error-message">
+                    <span *ngIf="snils!.errors?.['required']">Обязательное поле</span>
+                    <span *ngIf="snils!.errors?.['invalidSnils']">Некорректный СНИЛС</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-line none-first-line">
+              <div>
+                <label for="lastName" class="parameter-title">Фамилия</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="LastName" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('LastName')?.value"
+                    (click)="clearSearch('LastName')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)" class="error-message">
+                    <span *ngIf="lastName!.errors?.['required']">Обязательное поле</span>
+                    <!-- <span *ngIf="inn!.errors?.['invalidInn']">Некорректный ИНН</span> -->
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="firstName" class="parameter-title">Имя</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="FirstName" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('FirstName')?.value"
+                    (click)="clearSearch('FirstName')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)" class="error-message">
+                    <span *ngIf="kpp!.errors?.['required']">Обязательное поле</span>
+                    <!-- <span *ngIf="kpp!.errors?.['invalidKpp']">Некорректный КПП</span> -->
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="patronymic" class="parameter-title">Отчество</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Patronymic" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Patronymic')?.value"
+                    (click)="clearSearch('Patronymic')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="patronymic!.invalid && (patronymic!.dirty || patronymic!.touched)" class="error-message">
+                    <span *ngIf="patronymic!.errors?.['required']">Обязательное поле</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-line none-first-line">
+              <div>
+                <label for="email" class="parameter-title">Email</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Email" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Email')?.value"
+                    (click)="clearSearch('Email')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="error-message">
+                    <span *ngIf="email!.errors?.['required']">Обязательное поле</span>
+                    <!-- <span *ngIf="inn!.errors?.['invalidInn']">Некорректный ИНН</span> -->
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="login" class="parameter-title">Логин</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Login" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Login')?.value"
+                    (click)="clearSearch('Login')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="login!.invalid && (login!.dirty || login!.touched)" class="error-message">
+                    <span *ngIf="kpp!.errors?.['required']">Обязательное поле</span>
+                    <!-- <span *ngIf="kpp!.errors?.['invalidKpp']">Некорректный КПП</span> -->
+                </div>
+              </div>
+              <div class="none-first-input">
+                <label for="password" class="parameter-title">Пароль</label>
+                <div class="normal-input">
+                  <input class="search-input normal" formControlName="Password" required/>
+                  <i
+                    class="material-icons close-icon"
+                    *ngIf="partnerForm.get('Password')?.value"
+                    (click)="clearSearch('Password')"
+                    >close</i
+                  >
+                </div>
+                <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="error-message">
+                    <span *ngIf="password!.errors?.['required']">Обязательное поле</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-line none-first-line select-block">
+              <div class="custom-select" #dropdownRef>
+                <label for="fio" class="parameter-title">Роль</label>
+                <div class="dropown-input" (click)="toggleRoleDropdown()">
+                  <input class="dropdown-search-input normal" formControlName="Role"/>
+                  <i class="material-icons dropdown-icon" [class.rotated]="showRoleOptions">expand_more</i>
+                  <i class="material-icons dropdown-close-icon" *ngIf="partnerForm.get('Role')?.value" (click)="clearSearch('Role')">close</i>
+                </div>
+                <div class="dropdown-custom-options" *ngIf="showRoleOptions">
+                  <div class="dropdown-options-wrapper">
+                    <span
+                      *ngFor="let option of roleOptions"
+                      class="dropdown-option"
+                      (click)="selectRoleOption(option)"
+                    >
+                      {{ option }}
+                      <i
+                        class="material-icons done-icon"
+                        *ngIf="option === partnerForm.get('Role')?.value"
+                        >done</i
+                      >
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="checkbox-container id-center">
+                <label [ngClass]="{
+                          'checkbox-label-normal': !partnerForm.controls['IsIdentificationCenter'].value,
+                          'checkbox-label-checked': partnerForm.controls['IsIdentificationCenter'].value
+                       }" class="checkbox-label">
+                  <svg class="checkbox-svg" viewBox="0 0 24 24">
+                    <path [ngClass]="{
+                            'checkbox-svg-line-normal': !partnerForm.controls['IsIdentificationCenter'].value,
+                            'checkbox-svg-line-checked': partnerForm.controls['IsIdentificationCenter'].value
+                         }" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                  </svg>
+                  <input type="checkbox" class="checkbox-input" formControlName="IsIdentificationCenter">
+                </label>
+                <div class="checkbox-title">
+                  Стутус ЦИ
+                </div>
+              </div>
+              <div class="checkbox-container id-center">
+                <label [ngClass]="{
+                          'checkbox-label-normal': !partnerForm.controls['IsHasLicence'].value,
+                          'checkbox-label-checked': partnerForm.controls['IsHasLicence'].value
+                       }" class="checkbox-label">
+                  <svg class="checkbox-svg" viewBox="0 0 24 24">
+                    <path [ngClass]="{
+                            'checkbox-svg-line-normal': !partnerForm.controls['IsHasLicence'].value,
+                            'checkbox-svg-line-checked': partnerForm.controls['IsHasLicence'].value
+                         }" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                  </svg>
+                  <input type="checkbox" class="checkbox-input" formControlName="IsHasLicence">
+                </label>
+                <div class="checkbox-title">
+                  Лицензиат ФСБ
+                </div>
+              </div>
+            </div>
+
+            <!-- <button type="submit">Submit</button> -->
+
+          </form>
+          </div>
+
+
+        </div>
+        <div class="user-docs">
+            <div class="user-docs-wrapper">
+              <div class="user-data-label">
+                Данные сертификата
+              </div>
+              <div class="form-line">
+                <div class="cert-select-container">
+                  <div class="cert-select-wrapper">
+                    <span class="cert-file-title">Сертификат</span>
+                    <div *ngIf="!certificateFile" class="cert-not-selected" >
+                      <div class="cert-drop-zone"
+                        (drop)="onFileDrop($event)"
+                        (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave($event)">
+                        <input class="cert-input" type="file" #fileInput (change)="onFileSelected($event)">
+                        <a tabindex="0" class="cert-input-href" (click)="fileInput.click()">Перетащите или выберите сертификат</a>
+                      </div>
+                    </div>
+
+                    <!-- файл выбран -->
+
+                    <div *ngIf="certificateFile" class="cert-selected">
+                      <div class="cert-href-zone" >
+                        <span class="cert-filename-container">
+                          <a  class="cert-filename-href" title="" >{{ certificateFile.name }}</a>
+                        </span>
+                        <div class="cert-spacing" ></div>
+                        <div class="cert-spacing" ></div>
+                        <span (click)="deleteCertificateFile()" class="image delete-image" title="Удалить файл договора" tabindex="0" ><!--?xml version="1.0" encoding="UTF-8"?--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="mdi-trash-can-outline" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="width: auto; height: auto; object-fit: scale-down;"><path d="M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="id-center-list">
+      <div class="id-center-list-wrapper">
+        <div class="id-center-title-wrapper">
+          <div [ngClass]="partnerForm.get('IsIdentificationCenter')?.value ? 'id-center-list-title' : 'id-center-list-title-disabled'">
+            Точки идентификации
+          </div>
+          <div (click)="partnerForm.get('IsIdentificationCenter')?.value && addNewForm()"
+            [ngClass]="partnerForm.get('IsIdentificationCenter')?.value ? 'id-center-add-button' : 'id-center-add-button-disabled'">
+            + Добавить
+          </div>
+
+        </div>
+        <div *ngFor="let form of idCenterForms; let i = index">
+          <form [formGroup]="form.formGroup">
+            <input type="text" formControlName="name" placeholder="Name">
+            <div class="custom-select">
+              <label for="fio" class="parameter-title">Город, улица, дом, офис</label>
+              <div class="dropown-input">
+                <input class="dropdown-search-input normal" formControlName="Address"
+                  (input)="fetchSuggestions($event, i)" (keydown)="handleKeyDown($event, form.suggestions, i)"/>
+                <i class="material-icons dropdown-close-icon" *ngIf="form.formGroup.get('Address')?.value" (click)="clearSpecificControl( i, 'Address')">close</i>
+              </div>
+              <div class="dropdown-custom-options" *ngIf="form.suggestions.length">
+                <div class="dropdown-options-wrapper">
+
+                  <span class="dropdown-option" *ngFor="let suggestion of form.suggestions; let j = index"
+                    (click)="setAddressValue(i, suggestion.value)"
+
+                    [class.dropdown-option-hover]="highlightedIndex === j">{{ suggestion.value }}
+                  </span>
+
+                </div>
+              </div>
+            </div>
+
+
+            <input type="email" formControlName="email" placeholder="Email">
+            <input type="tel" formControlName="telephone" placeholder="Telephone">
+          </form>
+        </div>
+
+
+
+      </div>
     </div>
   </div>
   <div class="close-menu">
     <div (click)="closeOverlay()" class="close-button-wrapper">
-      <i class="material-icons close-icon">close</i>
+      <i class="material-icons close-wide-window-icon">close</i>
     </div>
   </div>
 

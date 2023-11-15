@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '../components/input/input.component';
 import { InnMaskDirective } from '../directives/inn-mask.directive';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
+import { NgxMaskDirective } from 'ngx-mask';
 
 
 
@@ -43,7 +44,12 @@ import { RequestDetailComponent } from './request-detail/request-detail.componen
     CdkMenuModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxMaskDirective
+
+  ],
+  providers: [
+
   ]
 })
 export class MainModule { }
