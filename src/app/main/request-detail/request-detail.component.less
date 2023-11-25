@@ -51,9 +51,15 @@
 
 }
 
+.main-content-wrapper {
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
 .request-detail-body {
   display: flex;
-  // height: 100%;
+  // max-height: calc(100vh - [HeightOfFooter] - [HeightOfHeader]);
+  // overflow-y: auto;
 }
 
 .user-data {
@@ -347,6 +353,11 @@
 
 }
 
+.custom-select-address {
+  position: relative;
+  min-width: 766px;
+}
+
 
 .dropown-input {
   flex: 0 1 600px;
@@ -482,7 +493,7 @@
   position: absolute;
   font-size: 1.3rem;
   line-height: 2.375rem;
-  right: 30px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -772,7 +783,9 @@ element.style {
   color: #999999;
   display: flex;
   align-items: start;
-  height: 100%;
+  min-height: 30.5vh;
+  // max-height: calc(100vh - [HeightOfOtherElements]);
+  // overflow-y: auto;
 
   .id-center-list-wrapper {
     padding: 1rem;
@@ -824,4 +837,63 @@ element.style {
   }
 
 }
+
+
+/* Стили для скролла */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  // box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  // border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+}
+
+* {
+  scrollbar-width: thin;
+  /* "thin" or "auto" or "none" */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  /* Thumb and Track color */
+}
+
+
+.box-shadow {
+  -webkit-box-shadow: 0px 18px 8px -4px rgba(34, 60, 80, 0.07);
+  -moz-box-shadow: 0px 18px 8px -4px rgba(34, 60, 80, 0.07);
+  box-shadow: 0px 18px 8px -4px rgba(34, 60, 80, 0.07);
+  // box-shadow: 0 5px 0px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+}
+
+.no-sadow {
+  box-shadow: none !important;
+}
+
+.id-center-item {
+  margin-top: 1rem;
+}
+
+.horizontal-line {
+  height: 1px;
+  background-color: #999999;
+  ; /* or any color you prefer */
+  width: 100%; /* or a specific width if you want */
+  margin: 20px 0; /* optional, for spacing */
+}
+
+// .horizontal-line:not(:last-child) {
+//   display: block;
+// }
+
+// .horizontal-line:last-child {
+//   display: none;
+// }
+
+
 

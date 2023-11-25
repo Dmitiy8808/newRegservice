@@ -68,6 +68,7 @@ export class RequestDetailComponent implements OnInit {
   get login() { return this.partnerForm.get('Login'); }
   get password() { return this.partnerForm.get('Password'); }
 
+
   savePartner(): void {
     console.log(this.partnerForm.value);
   }
@@ -292,10 +293,11 @@ deleteCertificateFile() {
 
 addNewForm() {
   const form = this.formBuilder.group({
-    name: '',
+    Name: '',
     Address: '',
-    email: '',
-    telephone: ''
+    Email: '',
+    Telephone: '',
+    IsActive: ''
   });
 
   const formWithSuggestions = {
@@ -352,6 +354,17 @@ handleKeyDown(event: KeyboardEvent, suggestions: any[], formIndex: number) {
   // Prevent default scrolling behavior for arrow keys
   if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
     event.preventDefault();
+  }
+}
+
+onScroll(event: any) {
+  const footer = document.querySelector('.request-detail-footer');
+  const contentWrapper = document.querySelector('.main-content-wrapper');
+
+  if (contentWrapper!.scrollTop > 0) {
+    footer!.classList.add('box-shadow');
+  } else {
+    footer!.classList.remove('box-shadow');
   }
 }
 

@@ -18,6 +18,8 @@ import { InputComponent } from '../components/input/input.component';
 import { InnMaskDirective } from '../directives/inn-mask.directive';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
 import { NgxMaskDirective } from 'ngx-mask';
+import { PhoneMaskDirective } from '../directives/phone-mask.directive';
+
 
 
 
@@ -35,7 +37,8 @@ import { NgxMaskDirective } from 'ngx-mask';
     PaginationComponent,
     InputComponent,
     InnMaskDirective,
-    RequestDetailComponent
+    RequestDetailComponent,
+    PhoneMaskDirective
   ],
   imports: [
     CommonModule,

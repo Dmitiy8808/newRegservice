@@ -8,6 +8,7 @@ import { DropdownInputComponent } from './components/dropdown-input/dropdown-inp
 import { IConfig, provideNgxMask } from 'ngx-mask';
 
 
+
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
